@@ -1,0 +1,10 @@
+# JetBrains IDE
+.idea
+
+# Vim
+*.swp
+*.swn
+*.swo
+
+# Environments
+.env

@@ -1,6 +1,8 @@
 package user
 
 import (
+	"github.com/erik-sostenes/users-api/internal/mooc/user/business/services/create"
+	"github.com/erik-sostenes/users-api/internal/shared/domain/bus/command"
 	"github.com/labstack/echo/v4"
 )
 
@@ -11,8 +13,11 @@ type Handler interface {
 }
 
 type user struct {
+	command.Bus[create.UserCommand]
 }
 
-func NewUserHandler() Handler {
-	return &user{}
+func NewUserHandler(command command.Bus[create.UserCommand]) Handler {
+	return &user{
+		command,
+	}
 }

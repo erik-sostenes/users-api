@@ -2,7 +2,6 @@ package create
 
 import (
 	"context"
-	"fmt"
 	"github.com/erik-sostenes/users-api/internal/shared/domain/bus/command"
 )
 
@@ -23,6 +22,5 @@ var _ command.Handler[UserCommand] = &CreateUserCommandHandler{}
 type CreateUserCommandHandler struct{}
 
 func (c *CreateUserCommandHandler) Handler(ctx context.Context, userCommand UserCommand) (err error) {
-	fmt.Println(userCommand)
 	return
 }

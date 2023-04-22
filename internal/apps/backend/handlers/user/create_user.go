@@ -1,15 +1,18 @@
 package user
 
 import (
+	"context"
 	"encoding/csv"
+	"fmt"
 	"github.com/erik-sostenes/users-api/internal/mooc/user/business/services/create"
 	"github.com/labstack/echo/v4"
 	"io"
 	"net/http"
+	"sync"
 )
 
 func (u *user) Create() echo.HandlerFunc {
-	return func(c echo.Context) error {
+	return func(c echo.Context) (err error) {
 		file, _, err := c.Request().FormFile("users")
 		if err != nil {
 			return c.JSON(http.StatusBadRequest, echo.Map{"error": "The .csv file is missing"})
@@ -17,23 +20,38 @@ func (u *user) Create() echo.HandlerFunc {
 		defer file.Close()
 
 		r := csv.NewReader(file)
+
+		var wg sync.WaitGroup
 		for {
-			record, err := r.Read()
+			user, err := r.Read()
 			if err == io.EOF {
 				break
 			}
+
 			if err != nil {
 				return c.JSON(http.StatusInternalServerError, echo.Map{"error": "An error occurred on the server"})
 			}
-			command := create.UserCommand{
-				Id:       record[0],
-				Name:     record[1],
-				LastName: record[2],
-			}
 
-			_ = u.Dispatch(c.Request().Context(), command)
+			wg.Add(1)
+			go func(user []string) {
+				defer wg.Done()
+
+				command := create.UserCommand{
+					Id:       user[0],
+					Name:     user[1],
+					LastName: user[2],
+				}
+
+				if err := u.Dispatch(context.Background(), command); err != nil {
+					_ = c.JSON(http.StatusCreated, echo.Map{"error": err.Error()})
+					return
+				}
+			}(user)
+			_ = c.JSON(http.StatusCreated, echo.Map{"message": fmt.Sprintf("User %s processed", user[0])})
 		}
 
-		return c.JSON(http.StatusCreated, echo.Map{"message": "users are being processed"})
+		_ = c.JSON(http.StatusCreated, echo.Map{"message": "users are being processed"})
+		wg.Wait()
+		return
 	}
 }

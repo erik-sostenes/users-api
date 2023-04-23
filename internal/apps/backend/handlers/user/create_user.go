@@ -5,6 +5,7 @@ import (
 	"encoding/csv"
 	"fmt"
 	"github.com/erik-sostenes/users-api/internal/mooc/user/business/services/create"
+	"github.com/erik-sostenes/users-api/internal/shared/infrastructure/handler"
 	"github.com/labstack/echo/v4"
 	"io"
 	"net/http"
@@ -20,6 +21,9 @@ func (u *user) Create() echo.HandlerFunc {
 		defer file.Close()
 
 		r := csv.NewReader(file)
+		if _, err = r.Read(); err == io.EOF || err != nil {
+			return c.JSON(http.StatusBadRequest, echo.Map{"error": "Missing data from .csv file"})
+		}
 
 		var wg sync.WaitGroup
 		for {
@@ -43,7 +47,7 @@ func (u *user) Create() echo.HandlerFunc {
 				}
 
 				if err := u.Dispatch(context.Background(), command); err != nil {
-					_ = c.JSON(http.StatusCreated, echo.Map{"error": err.Error()})
+					_ = handler.ErrorHandler(c, err)
 					return
 				}
 			}(user)

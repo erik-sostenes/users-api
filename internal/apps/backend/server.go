@@ -10,7 +10,7 @@ import (
 
 const defaultPort = "8080"
 
-// Server contains the configuration of server to start and register all http handlers
+// Server contains the configuration of server to start and register all http handler
 type Server struct {
 	port   string
 	engine *echo.Echo
@@ -29,7 +29,7 @@ func NewServer(engine *echo.Echo) *Server {
 	}
 }
 
-// Start initialize the server with all http handlers
+// Start initialize the server with all http handler
 func (s *Server) Start() error {
 	s.setRoutes()
 

@@ -44,7 +44,7 @@ func (cb *CommandBus[V]) Record(c Command, h Handler[V]) (err error) {
 
 	_, ok := (*cb)[cmdID]
 	if ok {
-		err = errors.CommandAlreadyRegisteredError(fmt.Sprintf("Command Already Registered %v", h))
+		err = errs.CommandAlreadyRegisteredError(fmt.Sprintf("Command Already Registered %v", h))
 		return
 	}
 
@@ -59,7 +59,7 @@ func (cb *CommandBus[V]) Dispatch(ctx context.Context, v V) (err error) {
 
 	ch, ok := (*cb)[cmdID]
 	if !ok {
-		err = errors.CommandNotRegisteredError(fmt.Sprintf("Command Not Registered %v", v))
+		err = errs.CommandNotRegisteredError(fmt.Sprintf("Command Not Registered %v", v))
 		return
 	}
 

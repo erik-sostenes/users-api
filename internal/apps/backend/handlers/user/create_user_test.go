@@ -3,7 +3,9 @@ package user
 import (
 	"bytes"
 	"fmt"
+	"github.com/erik-sostenes/users-api/internal/mooc/user/business/domain"
 	"github.com/erik-sostenes/users-api/internal/mooc/user/business/services/create"
+	"github.com/erik-sostenes/users-api/internal/mooc/user/infrastructure/persistence"
 	"github.com/erik-sostenes/users-api/internal/shared/domain/bus/command"
 	"github.com/labstack/echo/v4"
 	"mime/multipart"
@@ -23,7 +25,7 @@ func TestUser_Create(t *testing.T) {
 	}{
 		"given an existing valid .csv file, a status code 201 is expected": {
 			request: func() *http.Request {
-				f, err := os.ReadFile("users.csv")
+				data, err := os.ReadFile("users.csv")
 				if err != nil {
 					t.Fatal(err)
 				}
@@ -31,7 +33,7 @@ func TestUser_Create(t *testing.T) {
 				var body bytes.Buffer
 				writer := multipart.NewWriter(&body)
 				part, _ := writer.CreateFormFile("users", "users.csv")
-				part.Write(f)
+				part.Write(data)
 				writer.Close()
 
 				req := httptest.NewRequest(http.MethodPost, "/v1/users", &body)
@@ -41,7 +43,11 @@ func TestUser_Create(t *testing.T) {
 				return req
 			}(),
 			userHandler: func() (handler Handler, err error) {
-				commandHandler := &create.CreateUserCommandHandler{}
+				commandHandler := &create.CreateUserCommandHandler{
+					create.UserCreator{
+						persistence.NewMockUserRepository[domain.UserId, domain.User](),
+					},
+				}
 
 				bus := make(command.CommandBus[create.UserCommand])
 				if err = bus.Record(create.UserCommand{}, commandHandler); err != nil {
@@ -54,7 +60,7 @@ func TestUser_Create(t *testing.T) {
 		},
 		"given a valid .csv file not existing, a status code 404 is expected": {
 			request: func() *http.Request {
-				f, err := os.ReadFile("users.csv")
+				data, err := os.ReadFile("users.csv")
 				if err != nil {
 					t.Fatal(err)
 				}
@@ -62,7 +68,7 @@ func TestUser_Create(t *testing.T) {
 				var body bytes.Buffer
 				writer := multipart.NewWriter(&body)
 				part, _ := writer.CreateFormFile("some_file", "users.csv")
-				part.Write(f)
+				part.Write(data)
 				writer.Close()
 
 				req := httptest.NewRequest(http.MethodPost, "/v1/users", &body)

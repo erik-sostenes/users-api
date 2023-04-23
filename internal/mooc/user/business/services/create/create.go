@@ -9,15 +9,11 @@ type UserCreator struct {
 	domain.UserRepository[domain.UserId, domain.User]
 }
 
-func (u *UserCreator) Create(ctx context.Context,
-	userId domain.UserId,
-	userName domain.UserName,
-	userLastName domain.UserLastName) error {
-
+func (u *UserCreator) Create(ctx context.Context, userId, userName, userLastName string) (err error) {
 	user, err := domain.NewUser(userId, userName, userLastName)
 	if err != nil {
-		return err
+		return
 	}
 
-	return u.Save(ctx, userId, user)
+	return u.Save(ctx, user.UserId, user)
 }

@@ -5,26 +5,20 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="31e4e416-6540-45b1-9d06-cc5339bf8181" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/internal/mooc/user/business/domain/user.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/internal/mooc/user/business/domain/user_id.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/internal/mooc/user/business/domain/user_lastName.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/internal/mooc/user/business/domain/user_name.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/internal/mooc/user/business/services/create/create.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/internal/mooc/user/infrastructure/persistence/mock_store.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/internal/shared/domain/domain.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/internal/shared/domain/identifier.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/internal/shared/infrastructure/handler/handler.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/internal/mooc/user/infrastructure/persistence/user.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/internal/mooc/user/infrastructure/persistence/user_test.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/internal/shared/infrastructure/persistence/connection.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/internal/shared/infrastructure/persistence/connection_test.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/internal/shared/infrastructure/persistence/persistence.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/internal/shared/shared.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/go.mod" beforeDir="false" afterPath="$PROJECT_DIR$/go.mod" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/go.sum" beforeDir="false" afterPath="$PROJECT_DIR$/go.sum" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/apps/backend/handlers/user/create_user.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/apps/backend/handlers/user/create_user.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/apps/backend/handlers/user/create_user_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/apps/backend/handlers/user/create_user_test.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/apps/backend/server.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/apps/backend/server.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/internal/mooc/user/business/domain/ports.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/mooc/user/business/domain/ports.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/mooc/user/business/domain/user.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/mooc/user/business/domain/user.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/mooc/user/business/services/create/create.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/mooc/user/business/services/create/create.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/internal/mooc/user/business/services/create/handler.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/mooc/user/business/services/create/handler.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/mooc/user/business/services/create/user.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/shared/domain/bus/command/command.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/shared/domain/bus/command/command.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/shared/domain/errors/errors.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/shared/domain/errors/errors.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/mooc/user/infrastructure/persistence/mock_store.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/mooc/user/infrastructure/persistence/persistence.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -80,7 +74,7 @@
       <recent name="C:\Users\eriks\OneDrive\Documentos\proyectos\users-api\internal\mooc\user\business\services\create" />
     </key>
   </component>
-  <component name="RunManager" selected="Go Test.TestUser_Create/given_an_existing_valid_.csv_file,_a_status_code_201_is_expected in github.com/erik-sostenes/users-api/internal/apps/backend/handlers/user">
+  <component name="RunManager" selected="Go Test.TestUser_Create in github.com/erik-sostenes/users-api/internal/apps/backend/handlers/user">
     <configuration name="TestUser_Create in github.com/erik-sostenes/users-api/internal/apps/backend/handlers/user" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
       <module name="users-api" />
       <working_directory value="$PROJECT_DIR$/internal/apps/backend/handlers/user" />
@@ -143,9 +137,9 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Go Test.TestUser_Create in github.com/erik-sostenes/users-api/internal/apps/backend/handlers/user" />
         <item itemvalue="Go Test.TestUser_Create/given_an_existing_valid_.csv_file,_a_status_code_201_is_expected in github.com/erik-sostenes/users-api/internal/apps/backend/handlers/user" />
         <item itemvalue="Go Test.TestUser_Create/given_a_valid_.csv_file_not_existing,_a_status_code_404_is_expected in github.com/erik-sostenes/users-api/internal/apps/backend/handlers/user (1)" />
-        <item itemvalue="Go Test.TestUser_Create in github.com/erik-sostenes/users-api/internal/apps/backend/handlers/user" />
         <item itemvalue="Go Test.TestUser_Create/given_a_valid_.csv_file_not_existing,_a_status_code_404_is_expected in github.com/erik-sostenes/users-api/internal/apps/backend/handlers/user" />
         <item itemvalue="Go Test.TestUser_Create/given_an_existing_valid_.csv_file,_a_status_code_201_is_expected in github.com/erik-sostenes/users-api/internal/apps/backend/handlers/user (2)" />
       </list>

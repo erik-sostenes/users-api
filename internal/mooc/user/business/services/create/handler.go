@@ -2,7 +2,6 @@ package create
 
 import (
 	"context"
-	"github.com/erik-sostenes/users-api/internal/mooc/user/business/domain"
 	"github.com/erik-sostenes/users-api/internal/shared/domain/bus/command"
 )
 
@@ -25,19 +24,5 @@ type CreateUserCommandHandler struct {
 }
 
 func (c *CreateUserCommandHandler) Handler(ctx context.Context, cmd UserCommand) error {
-	userId, err := domain.NewUserId(cmd.Id)
-	if err != nil {
-		return err
-	}
-
-	userName, err := domain.NewUserName(cmd.Name)
-	if err != nil {
-		return err
-	}
-
-	userLastName, err := domain.NewUserLastName(cmd.LastName)
-	if err != nil {
-		return err
-	}
-	return c.UserCreator.Create(ctx, userId, userName, userLastName)
+	return c.UserCreator.Create(ctx, cmd.Id, cmd.Name, cmd.LastName)
 }

@@ -6,9 +6,9 @@ import (
 	"github.com/labstack/echo/v4"
 )
 
-var _ Handler = &user{}
+var _ UserHandler = &user{}
 
-type Handler interface {
+type UserHandler interface {
 	Create() echo.HandlerFunc
 }
 
@@ -16,7 +16,7 @@ type user struct {
 	command.Bus[create.UserCommand]
 }
 
-func NewUserHandler(command command.Bus[create.UserCommand]) Handler {
+func NewUserHandler(command command.Bus[create.UserCommand]) UserHandler {
 	return &user{
 		command,
 	}

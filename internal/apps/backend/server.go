@@ -2,6 +2,7 @@ package backend
 
 import (
 	"fmt"
+	"github.com/erik-sostenes/users-api/internal/apps/backend/handlers"
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
 	"os"
@@ -12,20 +13,22 @@ const defaultPort = "8080"
 
 // Server contains the configuration of server to start and register all http handler
 type Server struct {
-	port   string
-	engine *echo.Echo
+	port    string
+	engine  *echo.Echo
+	handler handlers.Handler
 }
 
 // NewServer returns an instance of Server
-func NewServer(engine *echo.Echo) *Server {
+func NewServer(handler handlers.Handler, engine *echo.Echo) *Server {
 	port := os.Getenv("PORT")
 	if strings.TrimSpace(port) == "" {
 		port = defaultPort
 	}
 
 	return &Server{
-		port:   port,
-		engine: engine,
+		port:    port,
+		engine:  engine,
+		handler: handler,
 	}
 }
 
@@ -45,4 +48,5 @@ func (s *Server) setRoutes() {
 	group := s.engine.Group("/v1/users")
 
 	group.GET("/status", HealthCheck())
+	group.POST("/", s.handler.UserHandler.Create())
 }

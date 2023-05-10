@@ -15,7 +15,7 @@ import (
 	"testing"
 )
 
-type funcHandler func() (Handler, error)
+type funcHandler func() (UserHandler, error)
 
 func TestUser_Create(t *testing.T) {
 	tsc := map[string]struct {
@@ -25,7 +25,7 @@ func TestUser_Create(t *testing.T) {
 	}{
 		"given an existing valid .csv file, a status code 201 is expected": {
 			request: func() *http.Request {
-				data, err := os.ReadFile("users.csv")
+				data, err := os.ReadFile("./scripts/users.csv")
 				if err != nil {
 					t.Fatal(err)
 				}
@@ -42,10 +42,12 @@ func TestUser_Create(t *testing.T) {
 
 				return req
 			}(),
-			userHandler: func() (handler Handler, err error) {
+			userHandler: func() (handler UserHandler, err error) {
+				//collection := db.NewMongoDataBase(db.NewMongoDBConfiguration()).Collection("users")
 				commandHandler := &create.CreateUserCommandHandler{
 					create.UserCreator{
 						persistence.NewMockUserRepository[domain.UserId, domain.User](),
+						//UserRepository: persistence.NewUserStore(collection),
 					},
 				}
 
@@ -60,7 +62,7 @@ func TestUser_Create(t *testing.T) {
 		},
 		"given a valid .csv file not existing, a status code 404 is expected": {
 			request: func() *http.Request {
-				data, err := os.ReadFile("users.csv")
+				data, err := os.ReadFile("./scripts/users.csv")
 				if err != nil {
 					t.Fatal(err)
 				}
@@ -77,7 +79,7 @@ func TestUser_Create(t *testing.T) {
 
 				return req
 			}(),
-			userHandler: func() (handler Handler, err error) {
+			userHandler: func() (handler UserHandler, err error) {
 				commandHandler := &create.CreateUserCommandHandler{}
 
 				bus := make(command.CommandBus[create.UserCommand])

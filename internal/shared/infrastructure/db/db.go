@@ -1,4 +1,4 @@
-package persistence
+package db
 
 import "github.com/erik-sostenes/users-api/internal/shared"
 
@@ -32,6 +32,6 @@ func NewMongoDBConfiguration() Configuration {
 		Driver:   shared.GetEnv("NoSQL_DRIVER"),
 		Host:     shared.GetEnv("NoSQL_HOST"),
 		Port:     shared.GetEnv("NoSQL_PORT"),
-		Database: shared.GetEnv("NoSQL_DATABASE_FOR_EATFAST_DOMAIN_EVENTS"),
+		Database: shared.GetEnv("NoSQL_DATABASE"),
 	}
 }

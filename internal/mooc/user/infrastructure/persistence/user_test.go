@@ -4,7 +4,7 @@ import (
 	"context"
 	"errors"
 	"github.com/erik-sostenes/users-api/internal/mooc/user/business/domain"
-	"github.com/erik-sostenes/users-api/internal/shared/infrastructure/persistence"
+	"github.com/erik-sostenes/users-api/internal/shared/infrastructure/db"
 	"testing"
 )
 
@@ -27,8 +27,8 @@ func TestUserStore_Save(t *testing.T) {
 				"05b15d71-ff47-4695-85d4-3ea3e5c12d60", "Yael", "Castro",
 			},
 			repository: func() domain.UserRepository[domain.UserId, domain.User] {
-				repository := persistence.NewMongoDataBase(
-					persistence.NewMongoDBConfiguration()).Collection("")
+				repository := db.NewMongoDataBase(
+					db.NewMongoDBConfiguration()).Collection("users")
 
 				return NewUserStore(repository)
 			}(),
@@ -43,8 +43,8 @@ func TestUserStore_Save(t *testing.T) {
 				"a37b054e-cb54-443a-953d-261b10476cb3", "Erik", "Sostenes",
 			},
 			repository: func() domain.UserRepository[domain.UserId, domain.User] {
-				repository := persistence.NewMongoDataBase(
-					persistence.NewMongoDBConfiguration()).Collection("")
+				repository := db.NewMongoDataBase(
+					db.NewMongoDBConfiguration()).Collection("users")
 
 				return NewUserStore(repository)
 			}(),
@@ -53,8 +53,8 @@ func TestUserStore_Save(t *testing.T) {
 	}
 
 	// SetUp prepare configuration before running integration tests all
-	repository := persistence.NewMongoDataBase(
-		persistence.NewMongoDBConfiguration()).Collection("")
+	repository := db.NewMongoDataBase(
+		db.NewMongoDBConfiguration()).Collection("users")
 
 	store := NewUserStore(repository)
 
@@ -88,8 +88,8 @@ func TestUserStore_Save(t *testing.T) {
 			})
 
 			err = ts.repository.Save(context.TODO(), user.UserId, user)
-			if errors.Is(err, ts.expectedError) {
-				t.Errorf("%v error was expected, but %v error was obtained", ts.expectedError, err)
+			if !errors.Is(err, ts.expectedError) {
+				t.Errorf("%v error was expected, but %s error was obtained", ts.expectedError, err)
 			}
 		})
 	}

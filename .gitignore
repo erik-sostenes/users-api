@@ -8,3 +8,6 @@
 
 # Environments
 .env
+
+### VS Code ###
+.vscode/
